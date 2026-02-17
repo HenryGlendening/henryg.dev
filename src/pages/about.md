@@ -6,8 +6,10 @@ description: A short bio and current focus for Henry Glendening.
 
 # About
 
-Henry is a software engineer focused on product-minded systems work, with a current emphasis on mobile development and applied AI.
+Hey, I'm Henry Glendening and have been building software professionally since 2012. I first started coding on a TI-83+ calculator when I was 12 and have continued my curiosity for and interest in building software ever since.
 
-This page is a placeholder for a longer bio, selected projects, and a clearer timeline of experience.
+Much of my career so far has been focused on building mobile apps, from greenfield code to large-scale applications with millions of users. I enjoy working with clean architecture, deliberate UX, and shipping things that directly improve people's lives in a tangible way.
 
-For now, expect short essays on engineering tradeoffs, build notes from active projects, and occasional writing about tools and process.
+Lately, I've been digging into prompt engineering, LLM evaluation, and how AI tools fit into the SDLC. I'm currently running a research project called Human Touch has involved 500+ LLM invocations, blind evaluation protocols, and some late nights trying to figure out how to get AI to produce solutions demonstrating ingenuity. More to come on that soon!
+
+This site is where I write about what I'm learning. Expect posts about AI evaluation, agentic engineering, mobile development, and whatever else I'm curious about.

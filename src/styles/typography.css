@@ -2,10 +2,20 @@
 
 @layer base {
   .prose {
+    @apply text-foreground;
+    --tw-prose-body: var(--color-foreground);
+    --tw-prose-headings: var(--color-foreground);
+    --tw-prose-links: var(--color-accent);
+    --tw-prose-invert-body: var(--color-foreground);
+    --tw-prose-invert-headings: var(--color-foreground);
+    --tw-prose-invert-links: var(--color-accent);
+
     h1,
     h2,
     h3,
     h4,
+    h5,
+    h6,
     th {
       @apply mb-3 text-foreground;
     }

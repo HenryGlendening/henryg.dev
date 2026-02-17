@@ -69,6 +69,7 @@ URLs follow year-based routing: `/posts/2026/hello-world/`
 - **Blog content** (`src/data/blog/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 - **Code**: [MIT](LICENSE)
 
+
 ## Acknowledgments
 
 Design patterns and approach inspired by [AstroPaper](https://github.com/satnaing/astro-paper) by Sat Naing and [steipete.me](https://steipete.me) by Peter Steinberger. All code written from scratch.

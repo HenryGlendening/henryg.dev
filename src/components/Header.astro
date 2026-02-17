@@ -14,7 +14,7 @@ const isActiveLink = (href: string): boolean => {
 
 <header class="border-b border-border/90">
   <div class="app-layout flex items-center justify-between py-5">
-    <a href="/" class="text-lg font-bold tracking-tight hover:text-accent">
+    <a href="/" class="text-lg font-bold tracking-tight transition-colors hover:text-accent">
       {SITE.title}
     </a>
 
@@ -114,7 +114,7 @@ const isActiveLink = (href: string): boolean => {
             <a
               href={link.href}
               class:list={[
-                "inline-block decoration-accent/80 underline-offset-8 transition hover:text-accent",
+                "inline-block text-accent/85 decoration-accent/80 underline-offset-8 transition-colors hover:text-accent",
                 isActiveLink(link.href) && "active-nav",
               ]}
               aria-current={isActiveLink(link.href) ? "page" : undefined}

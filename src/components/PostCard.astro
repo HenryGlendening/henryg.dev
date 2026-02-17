@@ -15,7 +15,7 @@ const formattedDate = new Intl.DateTimeFormat(SITE.lang, {
 }).format(post.data.pubDatetime);
 ---
 
-<article class="border-b border-border py-4">
+<article class="border-b border-border py-3">
   <h3 class="text-lg leading-snug">
     <a href={postURL} class="font-bold text-accent transition-colors hover:text-accent/80">{post.data.title}</a>
   </h3>
@@ -24,5 +24,5 @@ const formattedDate = new Intl.DateTimeFormat(SITE.lang, {
     {formattedDate}
   </time>
 
-  <p class="mt-2 text-sm text-foreground/80">{post.data.description}</p>
+  <p class="mt-1.5 text-sm text-foreground/80">{post.data.description}</p>
 </article>

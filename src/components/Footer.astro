@@ -33,11 +33,11 @@ const ICONS: Record<string, { viewBox: string; paths: string[] }> = {
 };
 ---
 
-<footer class="mt-20 border-t border-border/90">
-  <div class="app-layout flex flex-col gap-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
+<footer class="mt-14 border-t border-border/90">
+  <div class="app-layout flex flex-col gap-3 py-6 text-sm sm:flex-row sm:items-center sm:justify-between">
     <p class="text-foreground/75">© {currentYear} Henry Glendening</p>
 
-    <ul class="flex items-center gap-3">
+    <ul class="flex items-center gap-2">
       {
         SOCIAL_LINKS.map((social) => {
           const icon = ICONS[social.label];

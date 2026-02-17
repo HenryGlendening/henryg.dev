@@ -1,0 +1,55 @@
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  .prose {
+    h1,
+    h2,
+    h3,
+    h4,
+    th {
+      @apply mb-3 text-foreground;
+    }
+
+    h3 {
+      @apply italic;
+    }
+
+    p,
+    li {
+      @apply text-foreground/85;
+    }
+
+    a {
+      @apply text-accent underline decoration-dashed underline-offset-4
+        hover:text-accent/80;
+    }
+
+    blockquote {
+      @apply border-l-accent italic;
+    }
+
+    hr {
+      @apply border-border;
+    }
+
+    pre {
+      @apply border border-border;
+    }
+
+    code:not(pre code) {
+      @apply rounded bg-muted px-1 py-0.5 text-foreground before:content-none after:content-none;
+    }
+
+    thead {
+      @apply border-b border-border;
+    }
+
+    tbody tr {
+      @apply border-b border-border;
+    }
+
+    img {
+      @apply mx-auto rounded-lg;
+    }
+  }
+}

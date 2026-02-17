@@ -15,22 +15,14 @@ const formattedDate = new Intl.DateTimeFormat(SITE.lang, {
 }).format(post.data.pubDatetime);
 ---
 
-<article class="rounded-lg border border-border bg-muted/20 p-5 transition-colors hover:border-accent/70">
-  <h3 class="text-xl leading-tight">
+<article class="border-b border-border py-4">
+  <h3 class="text-lg leading-snug">
     <a href={postURL} class="font-bold text-accent transition-colors hover:text-accent/80">{post.data.title}</a>
   </h3>
 
+  <time class="mt-1 block text-xs text-accent/70" datetime={post.data.pubDatetime.toISOString()}>
+    {formattedDate}
+  </time>
+
   <p class="mt-2 text-sm text-foreground/80">{post.data.description}</p>
-
-  <div class="mt-4 flex flex-wrap items-center gap-3 text-xs text-foreground/65">
-    <time class="text-accent/70" datetime={post.data.pubDatetime.toISOString()}>{formattedDate}</time>
-
-    {
-      post.data.tags.length > 0 && (
-        <ul class="flex flex-wrap gap-2">
-          {post.data.tags.map((tag) => <li class="rounded border border-border px-2 py-1">#{tag}</li>)}
-        </ul>
-      )
-    }
-  </div>
 </article>

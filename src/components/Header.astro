@@ -1,0 +1,176 @@
+---
+import { NAV_LINKS, SITE } from "../consts";
+
+const currentPath = Astro.url.pathname;
+
+const isActiveLink = (href: string): boolean => {
+  if (href === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+};
+---
+
+<header class="border-b border-border/90">
+  <div class="app-layout flex items-center justify-between py-5">
+    <a href="/" class="text-lg font-bold tracking-tight hover:text-accent">
+      {SITE.title}
+    </a>
+
+    <div class="flex items-center gap-2">
+      {SITE.lightAndDarkMode && (
+        <button
+          type="button"
+          data-theme-toggle
+          aria-label="Toggle dark mode"
+          aria-pressed="false"
+          class="inline-flex size-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:border-accent hover:text-accent"
+        >
+          <svg
+            data-icon="sun"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            class="size-4"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2.5v2.5"></path>
+            <path d="M12 19v2.5"></path>
+            <path d="M4.9 4.9l1.8 1.8"></path>
+            <path d="M17.3 17.3l1.8 1.8"></path>
+            <path d="M2.5 12h2.5"></path>
+            <path d="M19 12h2.5"></path>
+            <path d="M4.9 19.1l1.8-1.8"></path>
+            <path d="M17.3 6.7l1.8-1.8"></path>
+          </svg>
+          <svg
+            data-icon="moon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            class="hidden size-4"
+            aria-hidden="true"
+          >
+            <path d="M20.4 13.2A8.5 8.5 0 1 1 10.8 3.6a6.7 6.7 0 0 0 9.6 9.6Z"></path>
+          </svg>
+        </button>
+      )}
+
+      <button
+        type="button"
+        class="inline-flex size-9 items-center justify-center rounded-md border border-border text-foreground transition hover:border-accent hover:text-accent md:hidden"
+        aria-controls="site-navigation"
+        aria-expanded="false"
+        data-nav-toggle
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <svg
+          data-icon="menu"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          class="size-4"
+          aria-hidden="true"
+        >
+          <path d="M3 6h18"></path>
+          <path d="M3 12h18"></path>
+          <path d="M3 18h18"></path>
+        </svg>
+        <svg
+          data-icon="close"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          class="hidden size-4"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12"></path>
+          <path d="M18 6l-12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="site-navigation" class="app-layout hidden pb-5 md:block" data-mobile-menu>
+    <ul class="flex flex-col gap-3 text-sm md:flex-row md:items-center md:gap-6">
+      {
+        NAV_LINKS.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                "inline-block decoration-accent/80 underline-offset-8 transition hover:text-accent",
+                isActiveLink(link.href) && "active-nav",
+              ]}
+              aria-current={isActiveLink(link.href) ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  import { initThemeToggle } from "../scripts/theme";
+
+  const initHeader = () => {
+    initThemeToggle();
+
+    const toggle = document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+    const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+
+    if (!toggle || !menu) {
+      return;
+    }
+
+    const menuIcon = toggle.querySelector<SVGElement>("[data-icon='menu']");
+    const closeIcon = toggle.querySelector<SVGElement>("[data-icon='close']");
+
+    const setOpen = (isOpen: boolean) => {
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      menu.classList.toggle("hidden", !isOpen);
+      menuIcon?.classList.toggle("hidden", isOpen);
+      closeIcon?.classList.toggle("hidden", !isOpen);
+    };
+
+    if (toggle.dataset.navBound !== "true") {
+      toggle.dataset.navBound = "true";
+      toggle.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        setOpen(!isOpen);
+      });
+    }
+
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    setOpen(isDesktop);
+
+    if (toggle.dataset.navMediaBound !== "true") {
+      toggle.dataset.navMediaBound = "true";
+      const mediaQuery = window.matchMedia("(min-width: 768px)");
+      mediaQuery.addEventListener("change", (event) => {
+        setOpen(event.matches);
+      });
+    }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHeader, { once: true });
+  } else {
+    initHeader();
+  }
+
+  document.addEventListener("astro:after-swap", initHeader);
+</script>

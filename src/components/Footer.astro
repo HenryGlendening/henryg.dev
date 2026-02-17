@@ -1,6 +1,8 @@
 ---
 import { SOCIAL_LINKS } from "../consts";
 
+const currentYear = new Date().getFullYear();
+
 const ICONS: Record<string, { viewBox: string; paths: string[] }> = {
   GitHub: {
     viewBox: "0 0 24 24",
@@ -33,7 +35,7 @@ const ICONS: Record<string, { viewBox: string; paths: string[] }> = {
 
 <footer class="mt-20 border-t border-border/90">
   <div class="app-layout flex flex-col gap-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-    <p class="text-foreground/75">© 2026 Henry Glendening</p>
+    <p class="text-foreground/75">© {currentYear} Henry Glendening</p>
 
     <ul class="flex items-center gap-3">
       {

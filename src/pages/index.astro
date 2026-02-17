@@ -1,17 +1,88 @@
 ---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PostCard from "../components/PostCard.astro";
+import Layout from "../layouts/Layout.astro";
+import { SITE } from "../consts";
+import { getSortedPosts } from "../utils/posts";
 
+const allPosts = await getSortedPosts();
+const recentPosts = allPosts.slice(0, SITE.postPerIndex);
+
+const nowItems = [
+  "Shipping practical product and platform work across mobile + AI.",
+  "Documenting engineering decisions with short, opinionated writing.",
+  "Making henryg.dev a focused home for notes, projects, and experiments.",
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={SITE.title} description={SITE.desc}>
+  <Header />
+
+  <main class="app-layout py-12 md:py-16">
+    <section class="grid gap-10 border-b border-border pb-12 md:gap-14 lg:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="text-sm uppercase tracking-[0.2em] text-foreground/60">Hello, I&apos;m</p>
+        <h1 class="mt-3 text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+          Henry Glendening
+        </h1>
+        <p class="mt-6 max-w-prose text-base leading-relaxed text-foreground/80 sm:text-lg">
+          I&apos;m a software engineer building reliable products where mobile execution meets fast-moving AI systems.
+          This site is where I publish technical writing, project notes, and what I&apos;m learning in public.
+        </p>
+      </div>
+
+      <aside class="rounded-xl border border-border bg-muted/25 p-6">
+        <h2 class="text-sm uppercase tracking-[0.2em] text-foreground/60">Now</h2>
+        <ul class="mt-4 space-y-3 text-sm leading-relaxed text-foreground/80">
+          {nowItems.map((item) => <li>{item}</li>)}
+        </ul>
+      </aside>
+    </section>
+
+    <section class="pt-12">
+      <div class="mb-6 flex items-center gap-3">
+        <h2 class="text-2xl font-bold">Recent Writing</h2>
+        <a
+          href="/rss.xml"
+          class="inline-flex size-8 items-center justify-center rounded-md border border-border text-foreground/75 transition hover:border-accent hover:text-accent"
+          aria-label="RSS Feed"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="size-4"
+            aria-hidden="true"
+          >
+            <path d="M6.2 17.8a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4Z"></path>
+            <path d="M2 9.2v3.2c5.3 0 9.6 4.3 9.6 9.6h3.2C14.8 14.9 9.1 9.2 2 9.2Z"></path>
+            <path d="M2 2v3.2c9.3 0 16.8 7.5 16.8 16.8H22C22 10.9 13.1 2 2 2Z"></path>
+          </svg>
+        </a>
+      </div>
+
+      {
+        recentPosts.length > 0 ? (
+          <div class="space-y-4">
+            {recentPosts.map((post) => <PostCard post={post} />)}
+          </div>
+        ) : (
+          <p class="text-sm text-foreground/70">No posts published yet.</p>
+        )
+      }
+
+      {
+        allPosts.length > recentPosts.length && (
+          <p class="mt-6 text-sm">
+            <a href="/posts/" class="underline decoration-dashed underline-offset-4 hover:text-accent">
+              Browse all writing
+            </a>
+          </p>
+        )
+      }
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

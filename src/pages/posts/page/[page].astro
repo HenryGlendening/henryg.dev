@@ -1,0 +1,75 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import PostCard from "../../../components/PostCard.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { SITE } from "../../../consts";
+import { getSortedPosts } from "../../../utils/posts";
+
+interface Props {
+  pagePosts: CollectionEntry<"blog">[];
+  currentPage: number;
+  totalPages: number;
+}
+
+export async function getStaticPaths() {
+  const allPosts = await getSortedPosts();
+  const totalPages = Math.ceil(allPosts.length / SITE.postPerPage);
+
+  return Array.from({ length: Math.max(totalPages - 1, 0) }, (_, index) => {
+    const currentPage = index + 2;
+    const start = (currentPage - 1) * SITE.postPerPage;
+    const end = start + SITE.postPerPage;
+
+    return {
+      params: { page: String(currentPage) },
+      props: {
+        pagePosts: allPosts.slice(start, end),
+        currentPage,
+        totalPages,
+      },
+    };
+  });
+}
+
+const { pagePosts, currentPage, totalPages } = Astro.props as Props;
+
+const getPageHref = (page: number): string =>
+  page === 1 ? "/posts/" : `/posts/page/${page}/`;
+---
+
+<Layout
+  title={`Writing - Page ${currentPage}`}
+  description={`Page ${currentPage} of writing by Henry Glendening.`}
+>
+  <Header />
+
+  <main class="app-layout py-12 md:py-16">
+    <header class="mb-8 border-b border-border pb-6">
+      <h1 class="text-3xl font-bold">Writing</h1>
+      <p class="mt-2 text-sm text-foreground/70">Page {currentPage} of {totalPages}.</p>
+    </header>
+
+    <div class="space-y-4">
+      {pagePosts.map((post) => <PostCard post={post} />)}
+    </div>
+
+    <nav class="mt-8 flex flex-wrap items-center gap-2 text-sm" aria-label="Pagination">
+      {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+        <a
+          href={getPageHref(pageNumber)}
+          aria-current={pageNumber === currentPage ? "page" : undefined}
+          class:list={[
+            "rounded-md border border-border px-3 py-1.5 transition hover:border-accent hover:text-accent",
+            pageNumber === currentPage && "border-accent text-accent",
+          ]}
+        >
+          {pageNumber}
+        </a>
+      ))}
+    </nav>
+  </main>
+
+  <Footer />
+</Layout>

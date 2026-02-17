@@ -1,0 +1,69 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Layout from "../../layouts/Layout.astro";
+import { SITE } from "../../consts";
+import { getSortedPosts } from "../../utils/posts";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+export async function getStaticPaths() {
+  const posts = await getSortedPosts();
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as Props;
+
+const { Content } = await render(post);
+
+const wordCount = (post.body ?? "").split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.round(wordCount / 220));
+const formattedDate = new Intl.DateTimeFormat(SITE.lang, {
+  dateStyle: "long",
+  timeZone: SITE.timezone,
+}).format(post.data.pubDatetime);
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  ogImage={post.data.ogImage ?? SITE.ogImage}
+  canonicalURL={post.data.canonicalURL}
+  pubDatetime={post.data.pubDatetime}
+>
+  <Header />
+
+  <main class="app-layout py-12 md:py-16">
+    <p>
+      <a href="/posts/" class="text-sm underline decoration-dashed underline-offset-4 hover:text-accent">
+        ← Back to writing
+      </a>
+    </p>
+
+    <article class="prose mt-6 max-w-none">
+      <header class="not-prose mb-10 border-b border-border pb-6">
+        <p class="text-sm text-foreground/65">{formattedDate} · {readingTime} min read</p>
+        <h1 class="mt-3 text-3xl font-bold leading-tight sm:text-4xl">{post.data.title}</h1>
+
+        {
+          post.data.tags.length > 0 && (
+            <ul class="mt-4 flex flex-wrap gap-2 text-xs text-foreground/70">
+              {post.data.tags.map((tag) => <li class="rounded border border-border px-2 py-1">#{tag}</li>)}
+            </ul>
+          )
+        }
+      </header>
+
+      <Content />
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

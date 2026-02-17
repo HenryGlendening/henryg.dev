@@ -1,0 +1,58 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PostCard from "../../components/PostCard.astro";
+import Layout from "../../layouts/Layout.astro";
+import { SITE } from "../../consts";
+import { getSortedPosts } from "../../utils/posts";
+
+const currentPage = 1;
+const allPosts = await getSortedPosts();
+const totalPages = Math.max(1, Math.ceil(allPosts.length / SITE.postPerPage));
+const pagePosts = allPosts.slice(0, SITE.postPerPage);
+
+const getPageHref = (page: number): string =>
+  page === 1 ? "/posts/" : `/posts/page/${page}/`;
+---
+
+<Layout title="Writing" description="All writing from Henry Glendening.">
+  <Header />
+
+  <main class="app-layout py-12 md:py-16">
+    <header class="mb-8 border-b border-border pb-6">
+      <h1 class="text-3xl font-bold">Writing</h1>
+      <p class="mt-2 text-sm text-foreground/70">Notes, essays, and implementation details from ongoing work.</p>
+    </header>
+
+    {
+      pagePosts.length > 0 ? (
+        <div class="space-y-4">
+          {pagePosts.map((post) => <PostCard post={post} />)}
+        </div>
+      ) : (
+        <p class="text-sm text-foreground/70">No posts available.</p>
+      )
+    }
+
+    {
+      totalPages > 1 && (
+        <nav class="mt-8 flex flex-wrap items-center gap-2 text-sm" aria-label="Pagination">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+            <a
+              href={getPageHref(pageNumber)}
+              aria-current={pageNumber === currentPage ? "page" : undefined}
+              class:list={[
+                "rounded-md border border-border px-3 py-1.5 transition hover:border-accent hover:text-accent",
+                pageNumber === currentPage && "border-accent text-accent",
+              ]}
+            >
+              {pageNumber}
+            </a>
+          ))}
+        </nav>
+      )
+    }
+  </main>
+
+  <Footer />
+</Layout>

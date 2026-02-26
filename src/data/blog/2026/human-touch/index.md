@@ -3,7 +3,7 @@ title: "Persona Seeding, Memory Implants, and the Limits of LLM Creativity"
 pubDatetime: 2026-02-26
 description: "I built a framework that places LLM agents in constrained creative environments with synthetic backstories and emotional memories, then measured whether it actually makes them more creative."
 tags: ["ai", "creativity", "llm", "research", "multi-agent"]
-draft: true
+draft: false
 ---
 
 # Persona Seeding, Memory Implants, and the Limits of LLM Creativity

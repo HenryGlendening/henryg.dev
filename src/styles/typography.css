@@ -1,14 +1,50 @@
 @plugin "@tailwindcss/typography";
 
-@layer base {
+@layer utilities {
   .prose {
     @apply text-foreground;
+
+    /* Body text */
     --tw-prose-body: var(--color-foreground);
+    --tw-prose-bold: var(--color-foreground);
     --tw-prose-headings: var(--color-foreground);
     --tw-prose-links: var(--color-accent);
+    --tw-prose-lead: color-mix(in oklch, var(--color-foreground) 70%, transparent);
+    --tw-prose-captions: color-mix(in oklch, var(--color-foreground) 65%, transparent);
+
+    /* Code */
+    --tw-prose-code: var(--color-foreground);
+    --tw-prose-pre-code: var(--color-foreground);
+    --tw-prose-pre-bg: var(--color-muted);
+    --tw-prose-kbd: var(--color-foreground);
+
+    /* Lists & counters */
+    --tw-prose-counters: color-mix(in oklch, var(--color-foreground) 55%, transparent);
+    --tw-prose-bullets: color-mix(in oklch, var(--color-foreground) 55%, transparent);
+
+    /* Quotes */
+    --tw-prose-quotes: var(--color-foreground);
+    --tw-prose-quote-borders: var(--color-accent);
+
+    /* Rules & borders */
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-th-borders: var(--color-border);
+    --tw-prose-td-borders: var(--color-border);
+
+    /* Invert variants (used by prose-invert, but we theme-switch via CSS vars) */
     --tw-prose-invert-body: var(--color-foreground);
     --tw-prose-invert-headings: var(--color-foreground);
     --tw-prose-invert-links: var(--color-accent);
+    --tw-prose-invert-lead: color-mix(in oklch, var(--color-foreground) 70%, transparent);
+    --tw-prose-invert-captions: color-mix(in oklch, var(--color-foreground) 65%, transparent);
+    --tw-prose-invert-counters: color-mix(in oklch, var(--color-foreground) 55%, transparent);
+    --tw-prose-invert-bullets: color-mix(in oklch, var(--color-foreground) 55%, transparent);
+    --tw-prose-invert-hr: var(--color-border);
+    --tw-prose-invert-quote-borders: var(--color-accent);
+    --tw-prose-invert-quotes: var(--color-foreground);
+    --tw-prose-invert-pre-code: var(--color-foreground);
+    --tw-prose-invert-th-borders: var(--color-border);
+    --tw-prose-invert-td-borders: var(--color-border);
 
     h1,
     h2,
@@ -60,6 +96,13 @@
 
     img {
       @apply mx-auto rounded-lg;
+      max-width: min(100%, 600px);
+      height: auto;
+    }
+
+    /* Hide the duplicate h1 from markdown when the not-prose header already shows the title */
+    > .not-prose + h1 {
+      @apply hidden;
     }
   }
 }

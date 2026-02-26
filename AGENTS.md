@@ -58,6 +58,7 @@ const slug = post.slug;
 
 ## Blog Posts
 
+- The site layout renders the frontmatter `title` as the page heading — do NOT include a duplicate `# H1` at the top of post content (it will appear twice)
 - Location: `src/data/blog/{year}/{slug}.md`
 - URL pattern: `/posts/{year}/{slug}/`
 - Required frontmatter: `title`, `pubDatetime`, `description`

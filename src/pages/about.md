@@ -10,6 +10,6 @@ Hey, I'm Henry Glendening and have been building software professionally since 2
 
 Much of my career so far has been focused on building mobile apps, from greenfield code to large-scale applications with millions of users. I enjoy working with clean architecture, deliberate UX, and shipping things that directly improve people's lives in a tangible way.
 
-Lately, I've been digging into prompt engineering, LLM evaluation, and how AI tools fit into the SDLC. I'm currently running a research project called Human Touch, which has so far involved 500+ LLM invocations, blind evaluation protocols, and some late nights trying to figure out how to get AI to produce solutions demonstrating ingenuity. More to come on that soon!
+Lately, I've been digging into prompt engineering, LLM evaluation, and how AI tools fit into the SDLC. I'm currently running a research project called Human Touch, which has involved [3,000+ scored data points across 30+ experiments](/posts/2026/human-touch/), blind evaluation protocols, and some late nights trying to figure out how to get AI to produce solutions demonstrating ingenuity.
 
 This site is where I write about what I'm learning. Expect posts about AI evaluation, agentic engineering, mobile development, and whatever else I'm curious about.

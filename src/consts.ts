@@ -1,7 +1,7 @@
 export const SITE = {
   website: "https://henryg.dev/",
   author: "Henry Glendening",
-  title: "Henry G",
+  title: "Henry Glendening",
   desc: "Software engineer building things at the intersection of mobile and AI.",
   ogImage: "og-default.png",
   lightAndDarkMode: true,
@@ -18,6 +18,7 @@ export const NAV_LINKS = [
 ] as const;
 
 export const SOCIAL_LINKS = [
+  { href: "mailto:henry@henryg.dev", label: "Email" },
   { href: "https://github.com/HenryGlendening", label: "GitHub" },
   { href: "https://x.com/BeetWellington", label: "X" },
   { href: "https://www.linkedin.com/in/henryglendening/", label: "LinkedIn" },
